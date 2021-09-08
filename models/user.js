@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.User.belongsToMany(models.Recipe, { through: 'Userfav', foreignKey: 'userId'});
     }
   };
   User.init({
