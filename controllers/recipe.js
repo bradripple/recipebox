@@ -65,12 +65,6 @@ router.post('/', async function(req, res) {
 
     const addRecipe = await Userfav.create({ userId: id, recipeId: createdRecipe.id})
 
-    // console.log('req', req.body);
-    // let recipeId = req.body.addrecipe;
-    // const addRecipe = await Userfav.create({ userId: id, recipeId})
-
-    // fs.writeFileSync('./user-favs.json', JSON.stringify(cars));
-
     res.redirect('/profile');
         
     } catch (error) {
@@ -78,6 +72,20 @@ router.post('/', async function(req, res) {
         
     }
    
+});
+
+router.delete('/:idx', function(req, res) {
+    let cars = fs.readFileSync('./user-favs.json');
+    let carsData = JSON.parse(cars);
+
+    // remove the deleted dinosaur from the dinosaurs array
+    carsData.splice(req.params.idx, 1);
+
+    // save the new dinosaur to the data.json file
+    fs.writeFileSync('./user-favs.json', JSON.stringify(carsData));
+
+    // redirect to the GET /dinosaurs route (index)
+    res.redirect('/profile');
 });
 
 module.exports = router;

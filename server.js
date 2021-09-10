@@ -7,6 +7,7 @@ const session = require('express-session');
 const passport = require('./config/ppConfig');
 const isLoggedIn = require('./middleware/isLoggedIn');
 const { User, Recipe } = require('./models');
+const methodOverride = require('method-override');
 
 const SECRET_SESSION = process.env.SECRET_SESSION;
 console.log(SECRET_SESSION);
@@ -42,19 +43,17 @@ app.get('/', (req, res) => {
 
 // Add this above /auth controllers
 app.get('/profile', isLoggedIn, async (req, res) => {
-  const { id, name, email } = req.user.get(); 
+  const { id, name, email } = req.user.get();
 
   const currentUser = await User.findOne({
     where: { id: id },
     include: [Recipe]
-});
-const parsedUser = currentUser.toJSON();
+  });
+  const parsedUser = currentUser.toJSON();
 
-console.log('currentUser', parsedUser.Recipes);
-
-const parsedRecipes = parsedUser.Recipes.map(recipe => {
-  return recipe.toJSON();
-})
+  const parsedRecipes = parsedUser.Recipes.map(recipe => {
+    return recipe.toJSON();
+  })
 
   res.render('profile', { id, name, email, recipes: parsedRecipes });
 });
