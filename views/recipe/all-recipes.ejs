@@ -12,7 +12,7 @@
                     <p>Serves: <%= u.servings %>
                     </p>
                     <a href="/recipe/details/<%= u.id %>">Read More</a>
-                    <form method="POST" action="/recipe">
+                    <form method="POST" action="/recipe/<%= u.id %> ">
                        <button type="submit" value="<%= u.id %>" name="addrecipe">Add to your Box</button>
                     </form>
                 </div>
