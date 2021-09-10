@@ -17,13 +17,13 @@ module.exports = (sequelize, DataTypes) => {
   Recipe.init({
     name: DataTypes.STRING,
     img_url: DataTypes.STRING,
-    description: DataTypes.STRING,
-    yields: DataTypes.INTEGER,
+    description: DataTypes.STRING(1234),
+    yields: DataTypes.STRING,
     prepTime: DataTypes.INTEGER,
     cookTime: DataTypes.INTEGER,
     totalTime: DataTypes.INTEGER,
     ingredients: DataTypes.ARRAY(DataTypes.STRING),
-    instructions: DataTypes.ARRAY(DataTypes.STRING),
+    instructions: DataTypes.ARRAY(DataTypes.STRING(1234)),
     tags: DataTypes.ARRAY(DataTypes.STRING),
     servings: DataTypes.INTEGER
   }, {

@@ -1,0 +1,14 @@
+<form action="/profile">
+    <button type="submit" value="<%= recipe.id %>">Add to your Box</button>
+</form>
+<h3><%= recipe.name %></h3>
+<p class="list">Description: <%= recipe.description %></p>
+<p class="list">Yields: <%= recipe.yields %></p>
+<p class="list">Prep-Time: <%= recipe.prepTime %></p>
+<p class="list">Cook-Time: <%= recipe.cookTime %></p>
+<p class="list">Total-time: <%= recipe.totalTime %></p>
+<p class="list">Serves: <%= recipe.servings %></p>
+<p class="list">Ingredients: <%= recipe.ingredients %></p>
+<p class="list">Instructions: <%= recipe.instructions %></p>
+
+<img src="<%= recipe.img_url %>" alt="" class="img">

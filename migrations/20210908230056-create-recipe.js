@@ -15,10 +15,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(1234)
       },
       yields: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       prepTime: {
         type: Sequelize.INTEGER
@@ -33,7 +33,7 @@ module.exports = {
         type: Sequelize.ARRAY(Sequelize.TEXT)
       },
       instructions: {
-        type: Sequelize.ARRAY(Sequelize.TEXT)
+        type: Sequelize.ARRAY(Sequelize.STRING(1234))
       },
       tags: {
         type: Sequelize.ARRAY(Sequelize.TEXT)
