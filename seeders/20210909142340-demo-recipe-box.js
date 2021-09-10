@@ -1,5 +1,6 @@
 'use strict';
 let axios = require("axios").default;
+const RECIPE_API_KEY = process.env.RECIPE_API_KEY;
 
 async function runThis() {
   let options = {
@@ -8,7 +9,7 @@ async function runThis() {
     params: { from: '0', size: '300', tags: 'dinner' },
     headers: {
       'x-rapidapi-host': 'tasty.p.rapidapi.com',
-      'x-rapidapi-key': '9092927c70msh6cce79875d36059p18e631jsn7321df031c27'
+      'x-rapidapi-key': RECIPE_API_KEY
     }
   };
   let seedArray = [];

@@ -1,4 +1,5 @@
 let axios = require("axios").default;
+const RECIPE_API_KEY = process.env.RECIPE_API_KEY;
 
 async function createSeedFile() {
   let options = {
@@ -7,7 +8,7 @@ async function createSeedFile() {
     params: { from: '0', size: '5', tags: 'dinner' },
     headers: {
       'x-rapidapi-host': 'tasty.p.rapidapi.com',
-      'x-rapidapi-key': '9092927c70msh6cce79875d36059p18e631jsn7321df031c27'
+      'x-rapidapi-key': RECIPE_API_KEY
     }
   };
 
@@ -76,7 +77,7 @@ async function runThis() {
     params: { from: '0', size: '5', tags: 'dinner' },
     headers: {
       'x-rapidapi-host': 'tasty.p.rapidapi.com',
-      'x-rapidapi-key': '9092927c70msh6cce79875d36059p18e631jsn7321df031c27'
+      'x-rapidapi-key': RECIPE_API_KEY
     }
   };
   let seedArray = [];
@@ -142,66 +143,3 @@ createSeedFile().then(result => {
   console.log('result:', result);
 })
 
-async function runThis() {
-  let options = {
-    method: 'GET',
-    url: 'https://tasty.p.rapidapi.com/recipes/list',
-    params: { from: '0', size: '5', tags: 'dinner' },
-    headers: {
-      'x-rapidapi-host': 'tasty.p.rapidapi.com',
-      'x-rapidapi-key': '9092927c70msh6cce79875d36059p18e631jsn7321df031c27'
-    }
-  };
-  let seedArray = [];
-  let response = await axios.request(options);
-  let { data } = response;
-  let { results } = data;
-
-  for (let i = 0; i < results.length; i++) {
-    let element = results[i];
-
-    if (element.instructions) {
-      const ingredientArr = [];
-      const instructionArr = [];
-      const tagsArr = [];
-
-      for (let j = 0; j < element.sections.length; j++) {
-        let sections = element.sections[j];
-        sections.components.forEach(c => {
-          ingredientArr.push(c.raw_text);
-        })
-      }
-      for (let k = 0; k < element.instructions.length; k++) {
-        let instruct = element.instructions[k];
-        instructionArr.push(instruct.display_text);
-      }
-
-      for (let l = 0; l < element.tags.length; l++) {
-        let tag = element.tags[l];
-        if (tag.type === "meal") {
-          tagsArr.push(tag.display_name);
-        }
-      }
-      const newObj = {
-        name: element.name,
-        description: element.description,
-        img_url: element.thumbnail_url,
-        yields: element.yields,
-        prepTime: element.prep_time_minutes,
-        cookTime: element.cook_time_minutes,
-        totalTime: element.total_time_minutes,
-        servings: element.num_servings,
-        ingredients: ingredientArr,
-        instructions: instructionArr,
-        tags: tagsArr,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      };
-      
-      seedArray.push(newObj);
-    }
-  }
-
-  // console.log(seedArray);
-  return seedArray;
-}
