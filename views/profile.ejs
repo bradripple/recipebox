@@ -11,11 +11,9 @@
                     <h2>
                         <%= u.name %>
                     </h2>
-                    <p>Cook time: <%= u.cookTime %>
-                    </p>
-                    <p>Serves: <%= u.servings %>
-                    </p>
-                    <a href="/recipe/details/<%= u.id %>">Read More</a>
+                    <p>Cook time: <%= u.cookTime %></p>
+                    <p>Serves: <%= u.servings %></p>
+                    <a href="/recipe/detailsprofile/<%= u.id %>">Read More</a>
                     <form method="POST" action="/recipe/<%= u.id %>/?_method=DELETE">
                         <input type="submit" value="Delete" id="bttn" class="bttn">
                     </form>

@@ -1,6 +1,3 @@
-<form method="POST" action="/recipe/<%= recipe.id %> ">
-    <button type="submit" value="<%= recipe.id %>" name="addrecipe">Add to your Box</button>
- </form>
 <h3><%= recipe.name %></h3>
 <p id="list">Description: <%= recipe.description %></p>
 <p id="list">Yields: <%= recipe.yields %></p>
@@ -18,5 +15,18 @@
         <li class="list"><%= recipe %></li>
         <% }); %>
     </ol>
+<form method="POST" action="/notes/<%= recipe.id %>/?_method=DELETE">
+    <ul id="list">
+        <% notes.forEach(function(note, index) { %>
+            <li class="list"><%= note %></li>
+            <% }); %>
+    </ul>
+    <input type="submit" value="Delete" id="bttn" class="bttn">
+</form>
+  
+<form action="/notes/<%= recipe.id %>?_method=PUT" method="POST">
+    <textarea name="notes" id="" cols="60" rows="5"></textarea>
+    <input type="submit" value="Add Note">
+</form>
 
 <img src="<%= recipe.img_url %>" alt="" class="img">

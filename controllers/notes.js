@@ -17,24 +17,39 @@ router.put('/:id', isLoggedIn, async function (req, res) {
         );
         console.log('newNote:', newNote);
 
-        res.redirect(`/recipe/details/${recipeId}`);
+        res.redirect(`/recipe/detailsprofile/${recipeId}`);
 
     } catch (error) {
         console.log(error);
     }
 })
 
-router.post('/:id', isLoggedIn, async function(req, res) {
+router.delete('/:id', isLoggedIn, async function (req, res) {
+
     try {
         const { id } = req.user.get();
-    const recipeId = req.params.id;
+        const recipeId = req.params.id;
 
-    const addRecipe = await Userfav.create({ userId: id, recipeId})
+        const recipe = await Userfav.findOne({ 
+            where:{ userId: id, recipeId } 
+        });
+        // const noteIdx = recipe.dataValues.notes;
+        // noteIdx.pop();
+        const note = recipe.dataValues.notes.splice();
+        const newNote = await Userfav.update(
+            { 'notes':sequelize.fn('array_remove', sequelize.col('notes'),JSON.stringify(note)) },
+            // { 'notes': sequelize.fn('array_append', sequelize.col('notes'), recipe.dataValues.notes.splice()) },
+            { 'where': { userId: id, recipeId } }
+        );
+        console.log('favass', newNote);
+        // await noteIdx.save();
+        // await .destroy();
 
-    res.redirect('/profile');
+        res.redirect(`/recipe/detailsprofile/${recipeId}`);
     } catch (error) {
         console.log(error);
     }
-    
+
 });
+
 module.exports = router;

@@ -26,13 +26,6 @@ router.get('/details/:idx', isLoggedIn, async (req, res) => {
     console.log(req.params.idx);
     try {
         const context = {};
-        const favRec = await Userfav.findOne({
-            where: { id: req.params.idx }
-        })
-        if (favRec.notes) {
-            context.notes = favRec.notes;
-        }
-
         const thisRecipe = await Recipe.findOne({
             where: { id: req.params.idx }
         }); // array
@@ -45,13 +38,38 @@ router.get('/details/:idx', isLoggedIn, async (req, res) => {
 });
 
 
+router.get('/detailsprofile/:idx', isLoggedIn, async (req, res) => {
+    console.log(req.params.idx);
+    try {
+        const context = {};
+        const { id } = req.user.get();
+        const defaultNote = ['Notes:']
+        const favRec = await Userfav.findOne({
+            where: { recipeId: req.params.idx, userId: id  }
+        })
+        if (favRec.notes) {
+            context.notes = favRec.notes;
+        } else {}
+
+        const thisRecipe = await Recipe.findOne({
+            where: { id: req.params.idx }
+        }); // array
+        // console.log(thisRecipe.to);
+        context.recipe = thisRecipe;
+        res.render('recipe/detailsprofile', context);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
 // adding association
 router.post('/:id', isLoggedIn, async function (req, res) {
     try {
         const { id } = req.user.get();
         const recipeId = req.params.id;
+        const newNote = ['Notes:'];
 
-        const addRecipe = await Userfav.create({ userId: id, recipeId })
+        const addRecipe = await Userfav.create({ userId: id, recipeId, notes: newNote });
 
         res.redirect('/profile');
     } catch (error) {
@@ -61,21 +79,18 @@ router.post('/:id', isLoggedIn, async function (req, res) {
 });
 
 
-//  actually adding the new recipe
+//  actually adding the new recipe - add note here
 router.post('/', isLoggedIn, async function (req, res) {
     try {
         const { id } = req.user.get();
         const { name, img_url, description, yields, prepTime, cookTime, totalTime, ingredients, instructions, tags, servings } = req.body;
-
         const ingredientArr = [ingredients];
         const instructionArr = [instructions];
         const tagsArr = [tags];
 
         const createdRecipe = await Recipe.create({ name, img_url, description, yields, prepTime, cookTime, totalTime, ingredientArr, instructionArr, tagsArr, servings });
 
-        console.log(createdRecipe);
-
-        const addRecipe = await Userfav.create({ userId: id, recipeId: createdRecipe.id })
+        const addRecipe = await Userfav.create({ userId: id, recipeId: createdRecipe.id });
 
         res.redirect('/profile');
 
