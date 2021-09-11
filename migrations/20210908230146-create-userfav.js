@@ -14,6 +14,9 @@ module.exports = {
       recipeId: {
         type: Sequelize.INTEGER
       },
+      notes: {
+        type: Sequelize.ARRAY(Sequelize.STRING(1234))
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

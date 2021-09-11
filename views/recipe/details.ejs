@@ -1,14 +1,26 @@
-<form action="/profile">
-    <button type="submit" value="<%= recipe.id %>">Add to your Box</button>
-</form>
+<form method="POST" action="/recipe/<%= recipe.id %> ">
+    <button type="submit" value="<%= recipe.id %>" name="addrecipe">Add to your Box</button>
+ </form>
 <h3><%= recipe.name %></h3>
-<p class="list">Description: <%= recipe.description %></p>
-<p class="list">Yields: <%= recipe.yields %></p>
-<p class="list">Prep-Time: <%= recipe.prepTime %></p>
-<p class="list">Cook-Time: <%= recipe.cookTime %></p>
-<p class="list">Total-time: <%= recipe.totalTime %></p>
-<p class="list">Serves: <%= recipe.servings %></p>
-<p class="list">Ingredients: <%= recipe.ingredients %></p>
-<p class="list">Instructions: <%= recipe.instructions %></p>
+<p id="list">Description: <%= recipe.description %></p>
+<p id="list">Yields: <%= recipe.yields %></p>
+<p id="list">Prep-Time: <%= recipe.prepTime %></p>
+<p id="list">Cook-Time: <%= recipe.cookTime %></p>
+<p id="list">Total-time: <%= recipe.totalTime %></p>
+<p id="list">Serves: <%= recipe.servings %></p>
+<ul id="list">
+    <% recipe.ingredients.forEach(function(recipe, index) { %>
+        <li class="list"><%= recipe %></li>
+     <% }); %>
+</ul>
+<ol id="list">
+    <% recipe.instructions.forEach(function(recipe, index) { %>
+        <li class="list"><%= recipe %></li>
+     <% }); %>
+</ol>
+<form action="/notes/<%= recipe.id %>?_method=PUT" method="POST">
+    <textarea name="notes" id="" cols="60" rows="5"></textarea>
+    <input type="submit" value="Add Note">
+</form>
 
 <img src="<%= recipe.img_url %>" alt="" class="img">

@@ -17,6 +17,7 @@ app.set('view engine', 'ejs');
 app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
 app.use(layouts);
 app.use(session({
   secret: SECRET_SESSION,    // What we actually will be giving the user on our site as a session cookie
@@ -43,23 +44,30 @@ app.get('/', (req, res) => {
 
 // Add this above /auth controllers
 app.get('/profile', isLoggedIn, async (req, res) => {
-  const { id, name, email } = req.user.get();
 
-  const currentUser = await User.findOne({
-    where: { id: id },
-    include: [Recipe]
-  });
-  const parsedUser = currentUser.toJSON();
+  try {
+    const { id, name, email } = req.user.get();
 
-  const parsedRecipes = parsedUser.Recipes.map(recipe => {
-    return recipe.toJSON();
-  })
+    const currentUser = await User.findOne({
+      where: { id: id },
+      include: [Recipe]
+    });
+    const parsedUser = currentUser.toJSON();
 
-  res.render('profile', { id, name, email, recipes: parsedRecipes });
+    const parsedRecipes = parsedUser.Recipes.map(recipe => {
+      return recipe.toJSON();
+    })
+
+    res.render('profile', { id, name, email, recipes: parsedRecipes });
+  } catch (error) {
+    console.log(error);
+  }
+
 });
 
 app.use('/auth', require('./controllers/auth'));
 app.use('/recipe', require('./controllers/recipe'));
+app.use('/notes', require('./controllers/notes'));
 
 
 const PORT = process.env.PORT || 3000;

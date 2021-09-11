@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 let axios = require("axios").default;
 const RECIPE_API_KEY = process.env.RECIPE_API_KEY;
 
@@ -6,7 +7,7 @@ async function runThis() {
   let options = {
     method: 'GET',
     url: 'https://tasty.p.rapidapi.com/recipes/list',
-    params: { from: '0', size: '300', tags: 'dinner' },
+    params: { from: '0', size: '1000', tags: 'dinner' },
     headers: {
       'x-rapidapi-host': 'tasty.p.rapidapi.com',
       'x-rapidapi-key': RECIPE_API_KEY

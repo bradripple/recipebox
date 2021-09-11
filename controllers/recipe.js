@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
+// const { not } = require('sequelize/types/lib/operators');
+const isLoggedIn = require('../middleware/isLoggedIn');
 const { Recipe, Userfav } = require('../models');
 
 
-router.get('/new', function(req, res) {
+router.get('/new', isLoggedIn, function(req, res) {
     res.render('recipe/new');
 });
 
-router.get('/all-recipes', async (req, res) => {
+router.get('/all-recipes', isLoggedIn, async (req, res) => {
     try {
         const allRecipes = await Recipe.findAll({}); // array
         // console.log(allRecipes);
@@ -19,15 +21,24 @@ router.get('/all-recipes', async (req, res) => {
     }
 });
 
-router.get('/details/:idx', async (req, res) => {
+// 
+router.get('/details/:idx', isLoggedIn, async (req, res) => {
     console.log(req.params.idx);
     try {
+        const context = {};
+        const favRec = await Userfav.findOne({
+            where: { id: req.params.idx }
+        })
+        if (favRec.notes) {
+            context.notes = favRec.notes;
+        }
+
         const thisRecipe = await Recipe.findOne({
             where: { id: req.params.idx }
         }); // array
         // console.log(thisRecipe.to);
-
-        res.render('recipe/details', { recipe: thisRecipe});
+        context.recipe = thisRecipe;
+        res.render('recipe/details', context);
     } catch (err) {
         console.log(err);
     }
@@ -35,57 +46,63 @@ router.get('/details/:idx', async (req, res) => {
 
 
 // adding association
-router.post('/:id', async function(req, res) {
-    const { id } = req.user.get();
-    const recipeId = req.params.id;
+router.post('/:id', isLoggedIn, async function (req, res) {
+    try {
+        const { id } = req.user.get();
+        const recipeId = req.params.id;
 
-    // console.log('req', req.body);
-    // let recipeId = req.body.addrecipe;
-    const addRecipe = await Userfav.create({ userId: id, recipeId})
+        const addRecipe = await Userfav.create({ userId: id, recipeId })
 
-    // fs.writeFileSync('./user-favs.json', JSON.stringify(cars));
+        res.redirect('/profile');
+    } catch (error) {
+        console.log(error);
+    }
 
-    res.redirect('/profile');
 });
 
 
 //  actually adding the new recipe
-router.post('/', async function(req, res) {
+router.post('/', isLoggedIn, async function (req, res) {
     try {
         const { id } = req.user.get();
-    const {name, img_url, description, yields, prepTime, cookTime, totalTime, ingredients, instructions, tags, servings} = req.body;
+        const { name, img_url, description, yields, prepTime, cookTime, totalTime, ingredients, instructions, tags, servings } = req.body;
 
-    const ingredientArr = [ingredients];
-    const instructionArr = [instructions];
-    const tagsArr = [tags];
+        const ingredientArr = [ingredients];
+        const instructionArr = [instructions];
+        const tagsArr = [tags];
 
-    const createdRecipe = await Recipe.create({name, img_url, description, yields, prepTime, cookTime, totalTime, ingredientArr, instructionArr, tagsArr, servings});
+        const createdRecipe = await Recipe.create({ name, img_url, description, yields, prepTime, cookTime, totalTime, ingredientArr, instructionArr, tagsArr, servings });
 
-    console.log(createdRecipe);
+        console.log(createdRecipe);
 
-    const addRecipe = await Userfav.create({ userId: id, recipeId: createdRecipe.id})
+        const addRecipe = await Userfav.create({ userId: id, recipeId: createdRecipe.id })
 
-    res.redirect('/profile');
-        
+        res.redirect('/profile');
+
     } catch (error) {
         console.log(error);
-        
+
     }
-   
+
 });
 
-router.delete('/:idx', function(req, res) {
-    let cars = fs.readFileSync('./user-favs.json');
-    let carsData = JSON.parse(cars);
+router.delete('/:idx', isLoggedIn, async function (req, res) {
 
-    // remove the deleted dinosaur from the dinosaurs array
-    carsData.splice(req.params.idx, 1);
+    try {
+        const { id } = req.user.get();
+        const recipeId = req.params.idx;
 
-    // save the new dinosaur to the data.json file
-    fs.writeFileSync('./user-favs.json', JSON.stringify(carsData));
+        const favass = await Userfav.findOne({ 
+            where:{ userId: id, recipeId } 
+        });
+        console.log('favass', favass);
+        await favass.destroy();
 
-    // redirect to the GET /dinosaurs route (index)
-    res.redirect('/profile');
+        res.redirect('/profile');
+    } catch (error) {
+        console.log(error);
+    }
+
 });
 
 module.exports = router;
