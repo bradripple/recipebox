@@ -1,7 +1,9 @@
-<form method="POST" action="/recipe/<%= recipe.id %> ">
-    <button type="submit" value="<%= recipe.id %>" name="addrecipe">Add to your Box</button>
- </form>
-<h3><%= recipe.name %></h3>
+<div id="listContainer">
+    <img src="<%= recipe.img_url %>" alt="" id="img">
+    <h1 id="name"><%= recipe.name %></h1>
+    <form method="POST" action="/recipe/<%= recipe.id %> ">
+        <button id="bttn" type="submit" value="<%= recipe.id %>" name="addrecipe">Add to your Box</button>
+     </form>
 <p id="list">Description: <%= recipe.description %></p>
 <p id="list">Yields: <%= recipe.yields %></p>
 <p id="list">Prep-Time: <%= recipe.prepTime %></p>
@@ -19,4 +21,4 @@
         <% }); %>
     </ol>
 
-<img src="<%= recipe.img_url %>" alt="" class="img">
+</div>

@@ -7,7 +7,7 @@ async function runThis() {
   let options = {
     method: 'GET',
     url: 'https://tasty.p.rapidapi.com/recipes/list',
-    params: { from: '0', size: '1755', tags:'dinner' },
+    params: { from: '0', size: '1755', tags:'breakfast' },
     headers: {
       'x-rapidapi-host': 'tasty.p.rapidapi.com',
       'x-rapidapi-key': RECIPE_API_KEY

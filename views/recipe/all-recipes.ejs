@@ -1,17 +1,16 @@
 <% for (let i=0; i < recipes.length; i++) {%>
     <% let u=recipes[i]; %>
         <!-- card 1 -->
+
         <div class="card">
             <div class="face face1">
                 <div class="content">
-                    <h2>
-                        <%= u.name %>
-                    </h2>
+                    <h2><%= u.name %></h2>
                     <p>Cook time: <%= u.cookTime %></p>
                     <p>Serves: <%= u.servings %></p>
-                    <a href="/recipe/details/<%= u.id %>">Read More</a>
+                    <a class="a" href="/recipe/details/<%= u.id %>" id="rmbttn">Read More</a>
                     <form method="POST" action="/recipe/<%= u.id %> ">
-                        <button type="submit" value="<%= u.id %>" name="addrecipe">Add to your Box</button>
+                        <button type="submit" value="<%= u.id %>" name="addrecipe" id="bttn">Add to your Box</button>
                     </form>
                 </div>
             </div>
@@ -22,5 +21,6 @@
                 </h2>
             </div>
         </div>
+
 
         <% } %>

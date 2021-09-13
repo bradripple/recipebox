@@ -1,4 +1,6 @@
-<h3><%= recipe.name %></h3>
+<div id="listContainer">
+    <img src="<%= recipe.img_url %>" alt="" id="img">
+<h1 id="name"><%= recipe.name %></h1>
 <p id="list">Description: <%= recipe.description %></p>
 <p id="list">Yields: <%= recipe.yields %></p>
 <p id="list">Prep-Time: <%= recipe.prepTime %></p>
@@ -14,7 +16,7 @@
     <% recipe.instructions.forEach(function(recipe, index) { %>
         <li class="list"><%= recipe %></li>
         <% }); %>
-    </ol>
+</ol>
 <form method="POST" action="/notes/<%= recipe.id %>/?_method=DELETE">
     <ul id="list">
         <% notes.forEach(function(note, index) { %>
@@ -24,9 +26,8 @@
     <input type="submit" value="Delete" id="bttn" class="bttn">
 </form>
   
-<form action="/notes/<%= recipe.id %>?_method=PUT" method="POST">
-    <textarea name="notes" id="" cols="60" rows="5"></textarea>
-    <input type="submit" value="Add Note">
+<form action="/notes/<%= recipe.id %>?_method=PUT" method="POST" class="noteCon">
+    <textarea name="notes" id="" cols="60" rows="5" class="note"></textarea>
+    <input id="bttn" type="submit" value="Add Note" class="note">
 </form>
-
-<img src="<%= recipe.img_url %>" alt="" class="img">
+</div>
