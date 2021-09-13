@@ -69,6 +69,9 @@ app.use('/auth', require('./controllers/auth'));
 app.use('/recipe', require('./controllers/recipe'));
 app.use('/notes', require('./controllers/notes'));
 
+app.get('/*', (req, res) => {
+  res.render('404')
+});
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {

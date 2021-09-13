@@ -21,6 +21,7 @@ router.get('/all-recipes', isLoggedIn, async (req, res) => {
     }
 });
 
+
 // 
 router.get('/details/:idx', isLoggedIn, async (req, res) => {
     console.log(req.params.idx);

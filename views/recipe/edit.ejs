@@ -1,39 +1,15 @@
-<div class="form-container">
-    <form method="POST" id="form" class="create-recipe" action="/userfavs/<%=recipesId%>/?_method=PUT">
-        <label for="recipeName" class="create-recipe">Name</label>
-        <input id="recipeName" type="text" name="name" class="create-recipe" value="<%= recipes.name %>">
 
-        <label for="recipeImg" class="create-recipe">Image URL</label>
-        <input id="recipeImg" type="text" name="img_url" class="create-recipe" value="<%= recipes.img_url %>">
+        <% for(let i = 1; i < notes.length; i++ ) { %>
+            <form method="POST" action="/notes/<%= recipe.id %>/<%= i %>?_method=DELETE">
+                <input type="text" value="<%= notes[i] %>">
+                <input type="submit" value="Delete" id="bttn" class="bttn">
+            </form>
+            <% }; %>
 
-        <label for="recipeDescription" class="create-recipe">Description</label>
-        <input id="recipeDescription" type="text" name="description" class="create-recipe" value="<%= recipes.description %>">
+    <!-- 
+        /notes/:id/:idx
+     -->
 
-        <label for="recipeYields" class="create-recipe">Yields</label>
-        <input id="recipeYields" type="text" name="yields" class="create-recipe" value="<%= recipes.yields %>">
 
-        <label for="recipePrepTime" class="create-recipe">Prep Time</label>
-        <input id="recipePrepTime" type="text" name="prepTime" class="create-recipe" value="<%= recipes.prepTime %>">
 
-        <label for="recipeCookTime" class="create-recipe">Cook Time</label>
-        <input id="recipeCookTime" type="text" name="cookTime" class="create-recipe" value="<%= recipes.cookTime %>">
-
-        <label for="recipeTotalTime" class="create-recipe">Total Time</label>
-        <input id="recipeTotalTime" type="text" name="totalTime" class="create-recipe" value="<%= recipes.totalTime %>">
-
-        <label for="recipeIngredients" class="create-recipe">Ingredients</label>
-        <input id="recipeIngredients" type="text" name="ingredients" class="create-recipe" value="<%= recipes.ingredients %>">
-
-        <label for="recipeInstructions" class="create-recipe">Instructions</label>
-        <input id="recipeInstructions" type="text" name="instructions" class="create-recipe" value="<%= recipes.instructions %>">
-
-        <label for="recipeTags" class="create-recipe">Meal</label>
-        <input id="recipeTags" type="text" name="tags" class="create-recipe" value="<%= recipes.tags %>">
-
-        <label for="recipeServings" class="create-recipe">Servings</label>
-        <input id="recipeServings" type="text" name="servings" class="create-recipe" value="<%= recipes.servings %>">
-
-        <input type="submit" id="bttn">
-
-    </form>
-</div>
+<form method="POST" action="/notes/<%= recipe.id %>/?_method=DELETE"></form>

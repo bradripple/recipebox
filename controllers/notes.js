@@ -24,28 +24,62 @@ router.put('/:id', isLoggedIn, async function (req, res) {
     }
 })
 
-router.delete('/:id', isLoggedIn, async function (req, res) {
+router.get('/edit/:id', isLoggedIn, async function(req, res) {
+    try {
+        const { id } = req.user.get();
+        const recipeId = req.params.id;
+        
+        const notes = await Userfav.findOne({ 
+            where:{ userId: id, recipeId } 
+        });
+        const parsedNotes = notes.toJSON();
+        const note = parsedNotes.notes;
+        // console.log('noooteesss', note);
+        const thisRecipe = await Recipe.findOne({
+            where: { id: req.params.id }
+        });
+        
+        res.render('recipe/edit', { notes: note, recipe: thisRecipe });
+    } catch (error) {
+        
+    }
+});
+
+router.delete('/:id/:idx', isLoggedIn, async function (req, res) {
 
     try {
         const { id } = req.user.get();
         const recipeId = req.params.id;
+        const arrIdx = req.params.idx;
+        console.log('arridx', arrIdx);
 
         const recipe = await Userfav.findOne({ 
             where:{ userId: id, recipeId } 
         });
         // const noteIdx = recipe.dataValues.notes;
         // noteIdx.pop();
-        const note = recipe.dataValues.notes.splice();
+        const note = recipe.dataValues.notes;
+        console.log('The array of notes', note);
+        note.splice(arrIdx, 1);
+        console.log('splicednote:', note);
+
+        // const newNote = await Userfav.update(
+        //     { 'notes': sequelize.fn('array_remove', sequelize.col('notes'), note) },
+        //     { 'where': { userId: id, recipeId } }
+        // );
+
         const newNote = await Userfav.update(
+            // { 'notes': sequelize.fn('array_append', sequelize.col('notes'), note) },
             { 'notes':sequelize.fn('array_remove', sequelize.col('notes'),JSON.stringify(note)) },
+            // { 'notes':sequelize.fn('array_remove', sequelize.col('notes'),JSON.stringify(note)) },
             // { 'notes': sequelize.fn('array_append', sequelize.col('notes'), recipe.dataValues.notes.splice()) },
             { 'where': { userId: id, recipeId } }
         );
-        console.log('favass', newNote);
-        // await noteIdx.save();
+        console.log('newNote', newNote);
+        // await note.save();
         // await .destroy();
 
-        res.redirect(`/recipe/detailsprofile/${recipeId}`);
+        res.redirect(`/notes/edit/${recipeId}`);
     } catch (error) {
         console.log(error);
     }

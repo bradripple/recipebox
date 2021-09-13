@@ -17,14 +17,12 @@
         <li class="list"><%= recipe %></li>
         <% }); %>
 </ol>
-<form method="POST" action="/notes/<%= recipe.id %>/?_method=DELETE">
     <ul id="list">
         <% notes.forEach(function(note, index) { %>
             <li class="list"><%= note %></li>
             <% }); %>
     </ul>
-    <input type="submit" value="Delete" id="bttn" class="bttn">
-</form>
+    <a href="/notes/edit/<%= recipe.id %>" id="navlink" id="bttn">Edit</a>
   
 <form action="/notes/<%= recipe.id %>?_method=PUT" method="POST" class="noteCon">
     <textarea name="notes" id="" cols="60" rows="5" class="note"></textarea>
