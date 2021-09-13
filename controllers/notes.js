@@ -76,7 +76,7 @@ router.delete('/:id/:idx', isLoggedIn, async function (req, res) {
             { 'where': { userId: id, recipeId } }
         );
         console.log('newNote', newNote);
-        // await note.save();
+        // await newNote.save();
         // await .destroy();
 
         res.redirect(`/notes/edit/${recipeId}`);
