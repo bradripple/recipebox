@@ -88,6 +88,8 @@ router.post('/', isLoggedIn, async function (req, res) {
         const ingredientArr = [ingredients];
         const instructionArr = [instructions];
         const tagsArr = [tags];
+        console.log('req.body', req.body);
+        console.log('req.body', ingredientArr);
 
         const createdRecipe = await Recipe.create({ name, img_url, description, yields, prepTime, cookTime, totalTime, ingredientArr, instructionArr, tagsArr, servings });
 
@@ -111,10 +113,39 @@ router.delete('/:idx', isLoggedIn, async function (req, res) {
         const favass = await Userfav.findOne({ 
             where:{ userId: id, recipeId } 
         });
-        console.log('favass', favass);
+        // console.log('favass', favass);
         await favass.destroy();
 
         res.redirect('/profile');
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+router.get('/deleterecipes', isLoggedIn, async (req, res) => {
+    try {
+        const allRecipes = await Recipe.findAll({}); // array
+        // console.log(allRecipes);
+
+        res.render('recipe/deleterecipes', { recipes: allRecipes});
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+router.delete('/delete/:idx', isLoggedIn, async function (req, res) {
+
+    try {
+        const recipeId = req.params.idx;
+        console.log('recipeId', recipeId);
+
+        const favass = await Recipe.destroy({ 
+            where:{ id: recipeId } 
+        });
+        console.log('favass', favass);
+        // await favass.destroy();
+
+        res.redirect('/recipe/deleterecipes');
     } catch (error) {
         console.log(error);
     }

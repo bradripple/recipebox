@@ -1,0 +1,23 @@
+<% for (let i=0; i < recipes.length; i++) {%>
+    <% let u=recipes[i]; %>
+        <!-- card 1 -->
+        <div class="card">
+            <div class="face face1">
+                <div class="content">
+                    <h2><%= u.name %></h2>
+                    <p>Cook time: <%= u.cookTime %></p>
+                    <p>Serves: <%= u.servings %></p>
+                    <a class="a rmbttn" href="/recipe/detailsprofile/<%= u.id %>" >Read More</a>
+                    <form method="POST" action="/recipe/delete/<%= u.id %>/?_method=DELETE">
+                        <input type="submit" value="Delete" id="bttn" class="rmbttn">
+                    </form>
+                </div>
+            </div>
+            <div class="face face2">
+                <h2>
+                    <!-- <%= u.name %> -->
+                    <img style="height:398px;width:398px;border-radius:8px;" src="<%= u.img_url %>">
+                </h2>
+            </div>
+        </div>
+        <% } %>

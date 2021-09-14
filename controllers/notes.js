@@ -58,9 +58,7 @@ router.delete('/:id/:idx', isLoggedIn, async function (req, res) {
         });
 
         const note = recipe.dataValues.notes;
-        console.log('The array of notes', note);
         note.splice(arrIdx, 1);
-        console.log('splicednote:', note);
 
         const number = await Userfav.update({
             notes: note

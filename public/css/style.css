@@ -35,7 +35,7 @@
 }
 .container .card:hover {
     box-shadow: 0 30px 50px rgba(0, 0, 0, .2);
-    box-shadow: 1px 4px rgb(191, 193, 194, .4);
+    /* box-shadow: 1px 4px rgb(191, 193, 194, .4); */
     border-style: inset;
     border-color: #bfc1c2;
 }
@@ -196,10 +196,6 @@ nav li:hover {
     border-radius: 8px;
     
 }
-/* #formList {
-    padding: 5px;
-    width: 100%;
-} */
 .createrecipe {
     width: 100%;
 }
