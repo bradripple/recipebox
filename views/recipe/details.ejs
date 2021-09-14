@@ -10,7 +10,16 @@
 <p id="list">Cook-Time: <%= recipe.cookTime %></p>
 <p id="list">Total-time: <%= recipe.totalTime %></p>
 <p id="list">Serves: <%= recipe.servings %></p>
-
+<ul id="list">
+    <% recipe.ingredients.forEach(function(recipe, index) { %>
+        <li class="list"><%= recipe %></li>
+     <% }); %>
+</ul>
+<ol id="list">
+    <% recipe.instructions.forEach(function(recipe, index) { %>
+        <li class="list"><%= recipe %></li>
+        <% }); %>
+    </ol>
 
 
 </div>
