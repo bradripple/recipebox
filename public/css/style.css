@@ -16,9 +16,9 @@
     grid-gap: 15px;
     margin: 0 auto;
     margin-bottom: 55px;
-    box-shadow: 1px 4px rgb(191, 193, 194, .4);
+    /* box-shadow: 1px 4px rgb(191, 193, 194, .4);
     border-style: inset;
-    border-color: #bfc1c2;
+    border-color: #bfc1c2; */
 }
 .container .card {
     position: relative;
