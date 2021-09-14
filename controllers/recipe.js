@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-// const { not } = require('sequelize/types/lib/operators');
+const sequelize = require('sequelize');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const { Recipe, Userfav } = require('../models');
 
@@ -85,21 +85,19 @@ router.post('/', isLoggedIn, async function (req, res) {
     try {
         const { id } = req.user.get();
         const { name, img_url, description, yields, prepTime, cookTime, totalTime, ingredients, instructions, tags, servings } = req.body;
-        const ingredientArr = [ingredients];
-        const instructionArr = [instructions];
-        const tagsArr = [tags];
-        console.log('req.body', req.body);
-        console.log('req.body', ingredientArr);
+        const ingredientArr = ingredients.split(',');
+        const instructionArr = instructions.split('.');
+        const tagsArr = tags.split(',');
+        const defaultNote = ['Notes:']
 
-        const createdRecipe = await Recipe.create({ name, img_url, description, yields, prepTime, cookTime, totalTime, ingredientArr, instructionArr, tagsArr, servings });
+        const createdRecipe = await Recipe.create({ name, img_url, description, yields, prepTime, cookTime, totalTime, ingredients: ingredientArr, instructions: instructionArr, tags: tagsArr, servings });
 
-        const addRecipe = await Userfav.create({ userId: id, recipeId: createdRecipe.id });
+        const addRecipe = await Userfav.create({ userId: id, recipeId: createdRecipe.id, notes: defaultNote });
 
         res.redirect('/profile');
 
     } catch (error) {
         console.log(error);
-
     }
 
 });
