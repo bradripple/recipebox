@@ -15,6 +15,10 @@
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     grid-gap: 15px;
     margin: 0 auto;
+    margin-bottom: 55px;
+    box-shadow: 1px 4px rgb(191, 193, 194, .4);
+    border-style: inset;
+    border-color: #bfc1c2;
 }
 .container .card {
     position: relative;
@@ -31,6 +35,9 @@
 }
 .container .card:hover {
     box-shadow: 0 30px 50px rgba(0, 0, 0, .2);
+    box-shadow: 1px 4px rgb(191, 193, 194, .4);
+    border-style: inset;
+    border-color: #bfc1c2;
 }
 .container .card .face {
     position: absolute;
@@ -42,6 +49,9 @@
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    box-shadow: 1px 4px rgb(191, 193, 194, .4);
+    border-style: inset;
+    border-color: #bfc1c2;
 }
 .container .card .face.face1 {
    box-sizing: border-box;
@@ -217,6 +227,9 @@ nav li:hover {
     box-shadow: 1px 4px rgb(191, 193, 194, .4);
     border-style: inset;
     border-color: #bfc1c2;
+    margin-top: 55px;
+    margin-left: 20px;
+    margin-right: 20px;
     margin-bottom: 45px;
     border-radius: 8px;
 }
