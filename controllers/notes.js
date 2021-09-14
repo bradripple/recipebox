@@ -56,28 +56,17 @@ router.delete('/:id/:idx', isLoggedIn, async function (req, res) {
         const recipe = await Userfav.findOne({ 
             where:{ userId: id, recipeId } 
         });
-        // const noteIdx = recipe.dataValues.notes;
-        // noteIdx.pop();
+
         const note = recipe.dataValues.notes;
         console.log('The array of notes', note);
         note.splice(arrIdx, 1);
         console.log('splicednote:', note);
 
-        // const newNote = await Userfav.update(
-        //     { 'notes': sequelize.fn('array_remove', sequelize.col('notes'), note) },
-        //     { 'where': { userId: id, recipeId } }
-        // );
-
-        const newNote = await Userfav.update(
-            // { 'notes': sequelize.fn('array_append', sequelize.col('notes'), note) },
-            { 'notes':sequelize.fn('array_remove', sequelize.col('notes'),JSON.stringify(note)) },
-            // { 'notes':sequelize.fn('array_remove', sequelize.col('notes'),JSON.stringify(note)) },
-            // { 'notes': sequelize.fn('array_append', sequelize.col('notes'), recipe.dataValues.notes.splice()) },
-            { 'where': { userId: id, recipeId } }
-        );
-        console.log('newNote', newNote);
-        // await newNote.save();
-        // await .destroy();
+        const number = await Userfav.update({
+            notes: note
+        }, {
+            where:{ userId: id, recipeId } 
+        });
 
         res.redirect(`/notes/edit/${recipeId}`);
     } catch (error) {
