@@ -328,7 +328,7 @@ Changes made:
 ```
 
 ## Conclusion
-Building out this app was a lot of fun! Lots of technical and creative aspects to this project. It was a great opportunity to work on my process for solving problems and learning to ask the right questions. I learned a lot of new skills and got to encorporate some new CSS that was really exciting. I'm very grateful to my class mates and instructors for their help and advice. 
+Building out this app was a lot of fun! Lots of technical and creative aspects to this project. It was a great opportunity to work on my process for solving problems and learning to ask the right questions. I learned a lot of new skills and got to incorporate some new CSS that was really exciting. I'm very grateful to my class mates and instructors for their help and advice. 
 
 
 ## Ideas to Implement
